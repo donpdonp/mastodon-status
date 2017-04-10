@@ -11,10 +11,18 @@ module Mastodon::Stats
       nodes = document.xpath_nodes("//tbody/tr")
       instances = [] of Instance
       nodes.map { |node| instances.push(Instance.new(node)) }
+      instances_users = instances.sum { |i| i.users }
+      instances_statuses = instances.sum { |i| i.statuses }
+      instances_connections = instances.sum { |i| i.connections }
       puts "#{instances.size} instances. " +
-           "#{instances.sum { |i| i.users }} users. " +
-           "#{instances.sum { |i| i.statuses }} statuses. " +
-           "#{instances.sum { |i| i.connections }} connections."
+           "#{instances_users} users. " +
+           "#{instances_statuses} statuses. " +
+           "#{instances_connections} connections."
+      stat_url = "http://localhost:8086/write?db=mastodon"
+      HTTP::Client.post(stat_url, nil, "instances_count value=#{instances.size}")
+      HTTP::Client.post(stat_url, nil, "instances_users value=#{instances_users}")
+      HTTP::Client.post(stat_url, nil, "instances_statuses value=#{instances_statuses}")
+      HTTP::Client.post(stat_url, nil, "instances_connections value=#{instances_connections}")
     end
   end
 end
