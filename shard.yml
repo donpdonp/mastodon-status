@@ -1,0 +1,14 @@
+name: mastodon-stats
+version: 0.1.0
+
+crystal: 0.21.1
+
+license: MIT
+
+authors:
+  - Don Park <donp@donp.org>
+
+targets:
+  mastodon-stats:
+    main: src/mastodon-stats.cr
+
