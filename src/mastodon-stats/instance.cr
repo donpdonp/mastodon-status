@@ -28,19 +28,19 @@ module Mastodon::Stats
       if host
         self.up = host.content == "UP"
       end
-      host = node.xpath_node("td[2]")
+      host = node.xpath_node("td[3]")
       if host
         self.name = host["data-value"]
       end
-      host = node.xpath_node("td[3]")
+      host = node.xpath_node("td[4]")
       if host && host.content && host.content.size > 0
         self.users = host.content.to_i
       end
-      host = node.xpath_node("td[4]")
+      host = node.xpath_node("td[5]")
       if host && host.content && host.content.size > 0
         self.statuses = host.content.to_i
       end
-      host = node.xpath_node("td[5]")
+      host = node.xpath_node("td[6]")
       if host && host.content && host.content.size > 0
         self.connections = host.content.to_i
       end
